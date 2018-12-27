@@ -17,7 +17,7 @@ composer require palmtree/chrono
 
 ## Usage
 
-### Dates
+### Date Comparison
 ```php
 <?php
 use Palmtree\Chrono\Date;
@@ -36,6 +36,22 @@ $date->isAfter($anotherDate); // returns false
 
 // returns true if the date object represents the current date
 $date->isToday();
+```
+
+### Date Manipulation
+```php
+<?php
+use Palmtree\Chrono\Date;
+
+$date = new Date('2019-01-01');
+
+$date->add(10, 'day');
+
+$date->format('Y-m-d'); // returns '2019-01-11'
+
+$date->subtract(1, 'month');
+
+$date->format('Y-m-d'); // returns '2018-12-11'
 ```
 
 ### Times
