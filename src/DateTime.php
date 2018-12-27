@@ -102,9 +102,6 @@ abstract class DateTime
         $dateFormatted = (int)$date->format($format);
 
         switch ($operator) {
-            case Comparision::EQUAL_TO:
-                $result = $thisFormatted === $dateFormatted;
-                break;
             case Comparision::LESS_THAN:
                 $result = $thisFormatted < $dateFormatted;
                 break;
@@ -116,6 +113,10 @@ abstract class DateTime
                 break;
             case Comparision::GREATER_THAN_OR_EQUAL_TO:
                 $result = $thisFormatted >= $dateFormatted;
+                break;
+            case Comparision::EQUAL_TO:
+            default:
+                $result = $thisFormatted === $dateFormatted;
                 break;
         }
 
