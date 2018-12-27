@@ -18,7 +18,7 @@ abstract class DateTime
         $this->dateTime = new \DateTime($time, $timezone);
     }
 
-    abstract protected function getFormatFromTimePrecision(string $precision);
+    abstract protected function getFormatFromTimePrecision(?string $precision);
 
     abstract protected function getDateInterval(int $value, string $period): \DateInterval;
 

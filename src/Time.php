@@ -35,6 +35,7 @@ class Time extends DateTime
                 $format = 'Hi';
                 break;
             case TimePeriod::SECOND:
+            default:
                 $format = 'His';
                 break;
         }

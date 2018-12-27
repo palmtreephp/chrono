@@ -54,6 +54,7 @@ class Date extends DateTime
                 $format = 'Ym';
                 break;
             case DatePeriod::DAY:
+            default:
                 $format = 'Ymd';
                 break;
         }
