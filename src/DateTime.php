@@ -95,34 +95,30 @@ abstract class DateTime
 
     private function compareTo(DateTime $date, string $operator, ?string $precision = null): bool
     {
-        $operators = Comparision::toArray();
-        if (!in_array($operator, $operators)) {
-            $operators = implode("','", $operators);
-            throw new \InvalidArgumentException("Operator must be one of '$operators'. $operator given");
-        }
-
         $format = $this->getFormatFromTimePrecision($precision);
 
-        $thisFormatted = (int)$this->format($format);
-        $dateFormatted = (int)$date->format($format);
+        $operandLeft  = (int)$this->format($format);
+        $operandRight = (int)$date->format($format);
 
         switch ($operator) {
+            case Comparision::EQUAL_TO:
+                $result = $operandLeft === $operandRight;
+                break;
             case Comparision::LESS_THAN:
-                $result = $thisFormatted < $dateFormatted;
+                $result = $operandLeft < $operandRight;
                 break;
             case Comparision::GREATER_THAN:
-                $result = $thisFormatted > $dateFormatted;
+                $result = $operandLeft > $operandRight;
                 break;
             case Comparision::LESS_THAN_OR_EQUAL_TO:
-                $result = $thisFormatted <= $dateFormatted;
+                $result = $operandLeft <= $operandRight;
                 break;
             case Comparision::GREATER_THAN_OR_EQUAL_TO:
-                $result = $thisFormatted >= $dateFormatted;
+                $result = $operandLeft >= $operandRight;
                 break;
-            case Comparision::EQUAL_TO:
             default:
-                $result = $thisFormatted === $dateFormatted;
-                break;
+                $operators = implode("','", Comparision::toArray());
+                throw new \InvalidArgumentException("Operator must be one of '$operators'. $operator given");
         }
 
         return $result;
