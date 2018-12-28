@@ -28,6 +28,7 @@ $date->format('d/m/Y');
 
 $anotherDate = new Date('2019-02-01');
 
+$date->isSame($anotherDate, 'year'); // returns true
 $date->isSame($anotherDate, 'month'); // returns true
 $date->isSame($anotherDate, 'day'); // returns false
 
@@ -54,7 +55,7 @@ $date->subtract(1, 'month');
 $date->format('Y-m-d'); // returns '2018-12-11'
 ```
 
-### Times
+### Time Comparison
 ```php
 <?php
 use Palmtree\Chrono\Time;
@@ -70,6 +71,25 @@ $time->isSame($anotherTime, 'minute'); // returns false
 
 $time->isBefore($anotherTime); // returns true
 $time->isAfter($anotherTime); // returns false
+```
+
+### Time Manipulation
+```php
+<?php
+use Palmtree\Chrono\Time;
+
+$time = new Time('13:00:00');
+
+$time
+    ->add(1, 'hour')
+    ->add(30, 'minute')
+    ->add(15, 'second');
+
+$time->format('H:i:s'); // returns '14:30:15'
+
+$time->subtract(15, 'second');
+
+$time->format('H:i:s'); // returns '14:30:00'
 ```
 
 ### Min / Max
