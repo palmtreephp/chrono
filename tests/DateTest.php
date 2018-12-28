@@ -10,7 +10,7 @@ class DateTest extends TestCase
 {
     public function testIsToday()
     {
-        $today     = new Date('now');
+        $today     = new Date('now', 'Europe/London');
         $tomorrow  = new Date('tomorrow');
         $yesterday = new Date('yesterday');
 
@@ -53,6 +53,28 @@ class DateTest extends TestCase
 
         $this->assertTrue($secondJan->isAfter($firstJan));
         $this->assertFalse($firstJan->isAfter($secondJan));
+    }
+
+    public function testIsSameOrBefore()
+    {
+        $firstJan  = new Date('2018-01-01');
+        $secondJan = new Date('2018-01-02');
+        $secondJan_2 = new Date('2018-01-02');
+
+        $this->assertTrue($firstJan->isSameOrBefore($secondJan));
+        $this->assertTrue($secondJan_2->isSameOrBefore($secondJan));
+        $this->assertFalse($secondJan->isSameOrBefore($firstJan));
+    }
+
+    public function testIsSameOrAfter()
+    {
+        $firstJan  = new Date('2018-01-01');
+        $firstJan_2  = new Date('2018-01-01');
+        $secondJan = new Date('2018-01-02');
+
+        $this->assertTrue($secondJan->isSameOrAfter($firstJan));
+        $this->assertTrue($firstJan_2->isSameOrAfter($firstJan));
+        $this->assertFalse($firstJan->isSameOrAfter($secondJan));
     }
 
     public function testAdd()
@@ -103,5 +125,13 @@ class DateTest extends TestCase
         $max = Date::max(...$dates);
 
         $this->assertSame($secondJan, $max);
+    }
+
+    /** @expectedException \InvalidArgumentException */
+    public function testInvalidPrecision()
+    {
+        $date = new Date('2019-01-01');
+
+        $date->isSame(new Date(), 'foo');
     }
 }

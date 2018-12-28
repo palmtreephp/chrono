@@ -15,7 +15,14 @@ abstract class AbstractPeriod
 
     public static function getDateFormat(string $period): string
     {
-        return static::getDateFormats()[$period];
+        $formats = static::getDateFormats();
+
+        if (!isset($formats[$period])) {
+            $keys = implode("','", array_keys($formats));
+            throw new \InvalidArgumentException("Period must be one of '$keys'. $period given");
+        }
+
+        return $formats[$period];
     }
 
     public static function toArray(): array

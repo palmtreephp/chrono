@@ -102,6 +102,7 @@ abstract class DateTime
 
         switch ($operator) {
             case Comparision::EQUAL_TO:
+            default:
                 $result = $operandLeft === $operandRight;
                 break;
             case Comparision::LESS_THAN:
@@ -116,9 +117,6 @@ abstract class DateTime
             case Comparision::GREATER_THAN_OR_EQUAL_TO:
                 $result = $operandLeft >= $operandRight;
                 break;
-            default:
-                $operators = implode("','", Comparision::toArray());
-                throw new \InvalidArgumentException("Operator must be one of '$operators'. $operator given");
         }
 
         return $result;
