@@ -13,7 +13,7 @@ class DateTime
 
     public function __construct(string $time = 'now', $timezone = null)
     {
-        if (is_string($timezone)) {
+        if (\is_string($timezone)) {
             $timezone = new \DateTimeZone($timezone);
         }
 
@@ -35,10 +35,10 @@ class DateTime
     {
         try {
             $intervalCode = TimePeriod::getIntervalCode($period);
-            $prefix = 'PT';
+            $prefix       = 'PT';
         } catch (\InvalidArgumentException $e) {
             $intervalCode = DatePeriod::getIntervalCode($period);
-            $prefix = 'P';
+            $prefix       = 'P';
         }
 
         return new \DateInterval("$prefix$value$intervalCode");
@@ -49,27 +49,27 @@ class DateTime
         return $this->dateTime->format($format);
     }
 
-    public function isSame(DateTime $date, ?string $precision = null): bool
+    public function isSame(self $date, ?string $precision = null): bool
     {
         return $this->compareTo($date, Comparision::EQUAL_TO, $precision);
     }
 
-    public function isBefore(DateTime $date, ?string $precision = null): bool
+    public function isBefore(self $date, ?string $precision = null): bool
     {
         return $this->compareTo($date, Comparision::LESS_THAN, $precision);
     }
 
-    public function isSameOrBefore(DateTime $date, ?string $precision = null): bool
+    public function isSameOrBefore(self $date, ?string $precision = null): bool
     {
         return $this->compareTo($date, Comparision::LESS_THAN_OR_EQUAL_TO, $precision);
     }
 
-    public function isAfter(DateTime $date, ?string $precision = null): bool
+    public function isAfter(self $date, ?string $precision = null): bool
     {
         return $this->compareTo($date, Comparision::GREATER_THAN, $precision);
     }
 
-    public function isSameOrAfter(DateTime $date, ?string $precision = null): bool
+    public function isSameOrAfter(self $date, ?string $precision = null): bool
     {
         return $this->compareTo($date, Comparision::GREATER_THAN_OR_EQUAL_TO, $precision);
     }
@@ -93,9 +93,9 @@ class DateTime
         return clone $this->dateTime;
     }
 
-    public static function min(...$dates): ?DateTime
+    public static function min(...$dates): ?self
     {
-        return \array_reduce($dates, function (?DateTime $carry, DateTime $dateTime) {
+        return \array_reduce($dates, function (?self $carry, self $dateTime) {
             if (!$carry || $dateTime->isBefore($carry)) {
                 $carry = $dateTime;
             }
@@ -104,9 +104,9 @@ class DateTime
         });
     }
 
-    public static function max(...$dates): ?DateTime
+    public static function max(...$dates): ?self
     {
-        return \array_reduce($dates, function (?DateTime $carry, DateTime $dateTime) {
+        return \array_reduce($dates, function (?self $carry, self $dateTime) {
             if (!$carry || $dateTime->isAfter($carry)) {
                 $carry = $dateTime;
             }
@@ -115,7 +115,7 @@ class DateTime
         });
     }
 
-    private function compareTo(DateTime $date, string $operator, ?string $precision = null): bool
+    private function compareTo(self $date, string $operator, ?string $precision = null): bool
     {
         $format = $this->getFormatFromTimePrecision($precision);
 
