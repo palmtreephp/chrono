@@ -31,9 +31,4 @@ abstract class AbstractPeriod
 
         return $formats[$period];
     }
-
-    public static function toArray(): array
-    {
-        return array_keys(static::getIntervalCodes());
-    }
 }
