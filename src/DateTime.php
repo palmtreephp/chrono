@@ -119,28 +119,6 @@ class DateTime
     {
         $format = $this->getFormatFromTimePrecision($precision);
 
-        $operandLeft  = (int)$this->format($format);
-        $operandRight = (int)$date->format($format);
-
-        switch ($operator) {
-            case Comparision::EQUAL_TO:
-            default:
-                $result = $operandLeft === $operandRight;
-                break;
-            case Comparision::LESS_THAN:
-                $result = $operandLeft < $operandRight;
-                break;
-            case Comparision::GREATER_THAN:
-                $result = $operandLeft > $operandRight;
-                break;
-            case Comparision::LESS_THAN_OR_EQUAL_TO:
-                $result = $operandLeft <= $operandRight;
-                break;
-            case Comparision::GREATER_THAN_OR_EQUAL_TO:
-                $result = $operandLeft >= $operandRight;
-                break;
-        }
-
-        return $result;
+        return \version_compare((int)$this->format($format), (int)$date->format($format), $operator);
     }
 }
