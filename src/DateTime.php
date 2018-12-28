@@ -20,30 +20,6 @@ class DateTime
         $this->dateTime = new \DateTime($time, $timezone);
     }
 
-    protected function getFormatFromTimePrecision(?string $precision): string
-    {
-        try {
-            $format = TimePeriods::getDateFormat($precision ?? TimePeriods::SECOND);
-        } catch (\InvalidArgumentException $e) {
-            $format = DatePeriods::getDateFormat($precision ?? DatePeriods::DAY);
-        }
-
-        return $format;
-    }
-
-    protected function getDateInterval(int $value, string $period): \DateInterval
-    {
-        try {
-            $intervalCode = TimePeriods::getIntervalCode($period);
-            $prefix       = 'PT';
-        } catch (\InvalidArgumentException $e) {
-            $intervalCode = DatePeriods::getIntervalCode($period);
-            $prefix       = 'P';
-        }
-
-        return new \DateInterval("$prefix$value$intervalCode");
-    }
-
     public function format(string $format): string
     {
         return $this->dateTime->format($format);
@@ -113,6 +89,30 @@ class DateTime
 
             return $carry;
         });
+    }
+
+    protected function getFormatFromTimePrecision(?string $precision): string
+    {
+        try {
+            $format = TimePeriods::getDateFormat($precision ?? TimePeriods::SECOND);
+        } catch (\InvalidArgumentException $e) {
+            $format = DatePeriods::getDateFormat($precision ?? DatePeriods::DAY);
+        }
+
+        return $format;
+    }
+
+    protected function getDateInterval(int $value, string $period): \DateInterval
+    {
+        try {
+            $intervalCode = TimePeriods::getIntervalCode($period);
+            $prefix       = 'PT';
+        } catch (\InvalidArgumentException $e) {
+            $intervalCode = DatePeriods::getIntervalCode($period);
+            $prefix       = 'P';
+        }
+
+        return new \DateInterval("$prefix$value$intervalCode");
     }
 
     private function compareTo(self $date, string $operator, ?string $precision = null): bool
