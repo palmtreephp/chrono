@@ -92,9 +92,29 @@ $time->subtract(15, 'second');
 $time->format('H:i:s'); // returns '14:30:00'
 ```
 
+### DateTime Comparison
+```php
+<?php
+use Palmtree\Chrono\DateTime;
+
+$dateTime = new DateTime('2019-01-01 12:30:00');
+
+$dateTime->format('d/m/Y H:i'); // returns 01/01/2019 12:30
+
+$anotherDateTime = new DateTime('2019-01-01 12:30:01');
+
+$dateTime->isSame($anotherDateTime); // returns false
+$dateTime->isSame($anotherDateTime, 'day'); // returns true
+$dateTime->isSame($anotherDateTime, 'hour'); // returns true
+$dateTime->isSame($anotherDateTime, 'minute'); // returns true
+
+$dateTime->isBefore($anotherDateTime); // returns true
+$dateTime->isAfter($anotherDateTime); // returns false
+```
+
 ### Min / Max
 
-Helper methods exist to return the minimum date from a set of dates:
+Helper methods exist to return either the earliest date from a set of dates:
 
 ```php
 <?php
@@ -109,7 +129,7 @@ $minDate = Date::min($jan, $feb, $march);
 return $minDate === $jan; // returns true;
 ```
 
-And the maximum date:
+And the latest date:
 
 ```php
 <?php
