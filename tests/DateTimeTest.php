@@ -24,7 +24,7 @@ class DateTimeTest extends TestCase
 
     public function testIsSame()
     {
-        $dateTime = new DateTime('2018-01-01 12:00:00');
+        $dateTime   = new DateTime('2018-01-01 12:00:00');
         $dateTime_2 = new DateTime('2018-01-01 12:00:01');
         $dateTime_3 = new DateTime('2018-01-02 12:00:01');
 
@@ -54,7 +54,8 @@ class DateTimeTest extends TestCase
     private function getPropertyValue($object, string $property)
     {
         $reflectionObject = new \ReflectionObject($object);
-        $property         = $reflectionObject->getProperty($property);
+
+        $property = $reflectionObject->getProperty($property);
         $property->setAccessible(true);
 
         return $property->getValue($object);
