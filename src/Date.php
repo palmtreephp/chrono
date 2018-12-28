@@ -22,7 +22,7 @@ class Date extends DateTime
 
     public function isToday(): bool
     {
-        if (is_null(self::$today)) {
+        if (self::$today === null) {
             self::$today = new self('now', $this->dateTime->getTimezone());
         }
 
