@@ -19,27 +19,6 @@ class Time extends DateTime
 
     protected function getFormatFromTimePrecision(?string $precision): string
     {
-        $precision = $precision ?? TimePeriod::SECOND;
-        $options   = TimePeriod::toArray();
-
-        if (!in_array($precision, $options)) {
-            $options = implode("','", $options);
-            throw new \InvalidArgumentException("Precision must be one of '$options'. '$precision' given");
-        }
-
-        switch ($precision) {
-            case TimePeriod::HOUR:
-                $format = 'H';
-                break;
-            case TimePeriod::MINUTE:
-                $format = 'Hi';
-                break;
-            case TimePeriod::SECOND:
-            default:
-                $format = 'His';
-                break;
-        }
-
-        return $format;
+        return TimePeriod::getDateFormat($precision ?? TimePeriod::SECOND);
     }
 }

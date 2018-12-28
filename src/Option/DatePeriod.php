@@ -16,4 +16,13 @@ abstract class DatePeriod extends AbstractPeriod
             self::DAY   => 'D',
         ];
     }
+
+    protected static function getDateFormats(): array
+    {
+        return [
+            self::YEAR  => 'Y',
+            self::MONTH => 'Ym',
+            self::DAY   => 'Ymd',
+        ];
+    }
 }

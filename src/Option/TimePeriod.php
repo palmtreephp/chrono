@@ -16,4 +16,13 @@ abstract class TimePeriod extends AbstractPeriod
             self::SECOND => 'S',
         ];
     }
+
+    protected static function getDateFormats(): array
+    {
+        return [
+            self::HOUR   => 'H',
+            self::MINUTE => 'Hi',
+            self::SECOND => 'His',
+        ];
+    }
 }

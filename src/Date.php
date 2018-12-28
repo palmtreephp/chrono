@@ -23,7 +23,7 @@ class Date extends DateTime
     public function isToday(): bool
     {
         if (is_null(self::$today)) {
-            self::$today = new self();
+            self::$today = new self('now', $this->dateTime->getTimezone());
         }
 
         return $this->isSame(self::$today, DatePeriod::DAY);
@@ -38,27 +38,6 @@ class Date extends DateTime
 
     protected function getFormatFromTimePrecision(?string $precision): string
     {
-        $precision = $precision ?? DatePeriod::DAY;
-        $options   = DatePeriod::toArray();
-
-        if (!in_array($precision, $options)) {
-            $options = implode("','", $options);
-            throw new \InvalidArgumentException("Precision must be one of '$options'. '$precision' given");
-        }
-
-        switch ($precision) {
-            case DatePeriod::YEAR:
-                $format = 'Y';
-                break;
-            case DatePeriod::MONTH:
-                $format = 'Ym';
-                break;
-            case DatePeriod::DAY:
-            default:
-                $format = 'Ymd';
-                break;
-        }
-
-        return $format;
+        return DatePeriod::getDateFormat($precision ?? DatePeriod::DAY);
     }
 }
