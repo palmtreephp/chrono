@@ -100,12 +100,13 @@ Helper methods exist to return the minimum date from a set of dates:
 <?php
 use Palmtree\Chrono\Date;
 
-$date = new Date('2019-01-01');
-$anotherDate = new Date('2019-02-01');
+$jan = new Date('2019-01-01');
+$feb = new Date('2019-02-01');
+$march = new Date('2019-03-01');
 
-$minDate = Date::min($date, $anotherDate);
+$minDate = Date::min($jan, $feb, $march);
 
-return $minDate === $date; // returns true;
+return $minDate === $jan; // returns true;
 ```
 
 And the maximum date:
@@ -114,12 +115,13 @@ And the maximum date:
 <?php
 use Palmtree\Chrono\Date;
 
-$date = new Date('2019-01-01');
-$anotherDate = new Date('2019-02-01');
+$jan = new Date('2019-01-01');
+$feb = new Date('2019-02-01');
+$march = new Date('2019-03-01');
 
-$maxDate = Date::max($date, $anotherDate);
+$maxDate = Date::max($jan, $feb, $march);
 
-return $maxDate === $anotherDate; // returns true;
+return $maxDate === $march; // returns true;
 ```
 
 Use the  [`...` (splat)](http://php.net/manual/en/migration56.new-features.php#migration56.new-features.splat) operator to pass an array of dates to the min or max methods:
