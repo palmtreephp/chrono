@@ -66,6 +66,11 @@ abstract class DateTime
         return $this;
     }
 
+    public function toDateTime(): \DateTime
+    {
+        return clone $this->dateTime;
+    }
+
     public static function min(...$dates): ?DateTime
     {
         return \array_reduce($dates, function (?DateTime $carry, DateTime $dateTime) {
