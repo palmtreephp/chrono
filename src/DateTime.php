@@ -3,8 +3,10 @@
 namespace Palmtree\Chrono;
 
 use Palmtree\Chrono\Option\Comparision;
+use Palmtree\Chrono\Option\DatePeriod;
+use Palmtree\Chrono\Option\TimePeriod;
 
-abstract class DateTime
+class DateTime
 {
     /** @var \DateTime */
     protected $dateTime;
@@ -18,9 +20,29 @@ abstract class DateTime
         $this->dateTime = new \DateTime($time, $timezone);
     }
 
-    abstract protected function getFormatFromTimePrecision(?string $precision);
+    protected function getFormatFromTimePrecision(?string $precision): string
+    {
+        try {
+            $format = TimePeriod::getDateFormat($precision ?? TimePeriod::SECOND);
+        } catch (\InvalidArgumentException $e) {
+            $format = DatePeriod::getDateFormat($precision ?? DatePeriod::DAY);
+        }
 
-    abstract protected function getDateInterval(int $value, string $period): \DateInterval;
+        return $format;
+    }
+
+    protected function getDateInterval(int $value, string $period): \DateInterval
+    {
+        try {
+            $intervalCode = TimePeriod::getIntervalCode($period);
+            $prefix = 'PT';
+        } catch (\InvalidArgumentException $e) {
+            $intervalCode = DatePeriod::getIntervalCode($period);
+            $prefix = 'P';
+        }
+
+        return new \DateInterval("$prefix$value$intervalCode");
+    }
 
     public function format(string $format): string
     {

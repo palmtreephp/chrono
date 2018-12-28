@@ -10,7 +10,14 @@ abstract class AbstractPeriod
 
     public static function getIntervalCode(string $period): string
     {
-        return static::getIntervalCodes()[$period];
+        $codes = static::getIntervalCodes();
+
+        if (!isset($codes[$period])) {
+            $keys = implode("','", array_keys($codes));
+            throw new \InvalidArgumentException("Period must be one of '$keys'. $period given");
+        }
+
+        return $codes[$period];
     }
 
     public static function getDateFormat(string $period): string

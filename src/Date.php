@@ -29,13 +29,6 @@ class Date extends DateTime
         return $this->isSame(self::$today, DatePeriod::DAY);
     }
 
-    protected function getDateInterval(int $value, string $period): \DateInterval
-    {
-        $intervalCode = DatePeriod::getIntervalCode($period);
-
-        return new \DateInterval("P$value$intervalCode");
-    }
-
     protected function getFormatFromTimePrecision(?string $precision): string
     {
         return DatePeriod::getDateFormat($precision ?? DatePeriod::DAY);

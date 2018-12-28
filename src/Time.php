@@ -10,13 +10,6 @@ use Palmtree\Chrono\Option\TimePeriod;
  */
 class Time extends DateTime
 {
-    protected function getDateInterval(int $value, string $period): \DateInterval
-    {
-        $intervalCode = TimePeriod::getIntervalCode($period);
-
-        return new \DateInterval("PT$value$intervalCode");
-    }
-
     protected function getFormatFromTimePrecision(?string $precision): string
     {
         return TimePeriod::getDateFormat($precision ?? TimePeriod::SECOND);
