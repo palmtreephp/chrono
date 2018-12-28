@@ -2,7 +2,7 @@
 
 namespace Palmtree\Chrono;
 
-use Palmtree\Chrono\Option\TimePeriod;
+use Palmtree\Chrono\Option\TimePeriods;
 
 /**
  * @method self add(int $value, string $period)
@@ -12,6 +12,6 @@ class Time extends DateTime
 {
     protected function getFormatFromTimePrecision(?string $precision): string
     {
-        return TimePeriod::getDateFormat($precision ?? TimePeriod::SECOND);
+        return TimePeriods::getDateFormat($precision ?? TimePeriods::SECOND);
     }
 }

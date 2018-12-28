@@ -2,7 +2,7 @@
 
 namespace Palmtree\Chrono\Option;
 
-abstract class AbstractPeriod
+abstract class AbstractPeriods
 {
     abstract protected static function getIntervalCodes(): array;
 

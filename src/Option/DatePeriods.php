@@ -2,7 +2,7 @@
 
 namespace Palmtree\Chrono\Option;
 
-abstract class DatePeriod extends AbstractPeriod
+abstract class DatePeriods extends AbstractPeriods
 {
     public const YEAR  = 'year';
     public const MONTH = 'month';

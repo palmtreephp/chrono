@@ -2,7 +2,7 @@
 
 namespace Palmtree\Chrono\Option;
 
-abstract class Comparision
+abstract class ComparisonOperators
 {
     public const EQUAL_TO                 = '==';
     public const LESS_THAN                = '<';

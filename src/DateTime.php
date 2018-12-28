@@ -2,9 +2,9 @@
 
 namespace Palmtree\Chrono;
 
-use Palmtree\Chrono\Option\Comparision;
-use Palmtree\Chrono\Option\DatePeriod;
-use Palmtree\Chrono\Option\TimePeriod;
+use Palmtree\Chrono\Option\ComparisonOperators;
+use Palmtree\Chrono\Option\DatePeriods;
+use Palmtree\Chrono\Option\TimePeriods;
 
 class DateTime
 {
@@ -23,9 +23,9 @@ class DateTime
     protected function getFormatFromTimePrecision(?string $precision): string
     {
         try {
-            $format = TimePeriod::getDateFormat($precision ?? TimePeriod::SECOND);
+            $format = TimePeriods::getDateFormat($precision ?? TimePeriods::SECOND);
         } catch (\InvalidArgumentException $e) {
-            $format = DatePeriod::getDateFormat($precision ?? DatePeriod::DAY);
+            $format = DatePeriods::getDateFormat($precision ?? DatePeriods::DAY);
         }
 
         return $format;
@@ -34,10 +34,10 @@ class DateTime
     protected function getDateInterval(int $value, string $period): \DateInterval
     {
         try {
-            $intervalCode = TimePeriod::getIntervalCode($period);
+            $intervalCode = TimePeriods::getIntervalCode($period);
             $prefix       = 'PT';
         } catch (\InvalidArgumentException $e) {
-            $intervalCode = DatePeriod::getIntervalCode($period);
+            $intervalCode = DatePeriods::getIntervalCode($period);
             $prefix       = 'P';
         }
 
@@ -51,27 +51,27 @@ class DateTime
 
     public function isSame(self $date, ?string $precision = null): bool
     {
-        return $this->compareTo($date, Comparision::EQUAL_TO, $precision);
+        return $this->compareTo($date, ComparisonOperators::EQUAL_TO, $precision);
     }
 
     public function isBefore(self $date, ?string $precision = null): bool
     {
-        return $this->compareTo($date, Comparision::LESS_THAN, $precision);
+        return $this->compareTo($date, ComparisonOperators::LESS_THAN, $precision);
     }
 
     public function isSameOrBefore(self $date, ?string $precision = null): bool
     {
-        return $this->compareTo($date, Comparision::LESS_THAN_OR_EQUAL_TO, $precision);
+        return $this->compareTo($date, ComparisonOperators::LESS_THAN_OR_EQUAL_TO, $precision);
     }
 
     public function isAfter(self $date, ?string $precision = null): bool
     {
-        return $this->compareTo($date, Comparision::GREATER_THAN, $precision);
+        return $this->compareTo($date, ComparisonOperators::GREATER_THAN, $precision);
     }
 
     public function isSameOrAfter(self $date, ?string $precision = null): bool
     {
-        return $this->compareTo($date, Comparision::GREATER_THAN_OR_EQUAL_TO, $precision);
+        return $this->compareTo($date, ComparisonOperators::GREATER_THAN_OR_EQUAL_TO, $precision);
     }
 
     public function add(int $value, string $period): self

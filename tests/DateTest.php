@@ -3,7 +3,7 @@
 namespace Palmtree\Chrono\Tests;
 
 use Palmtree\Chrono\Date;
-use Palmtree\Chrono\Option\DatePeriod;
+use Palmtree\Chrono\Option\DatePeriods;
 use PHPUnit\Framework\TestCase;
 
 class DateTest extends TestCase
@@ -25,8 +25,8 @@ class DateTest extends TestCase
         $secondJan = new Date('2018-01-02');
         $firstFeb  = new Date('2018-02-01');
 
-        $this->assertTrue($firstJan->isSame($secondJan, DatePeriod::MONTH));
-        $this->assertFalse($firstJan->isSame($firstFeb, DatePeriod::MONTH));
+        $this->assertTrue($firstJan->isSame($secondJan, DatePeriods::MONTH));
+        $this->assertFalse($firstJan->isSame($firstFeb, DatePeriods::MONTH));
     }
 
     public function testIsSameYear()
@@ -34,7 +34,7 @@ class DateTest extends TestCase
         $firstJan = new Date('2018-01-01');
         $lastDec  = new Date('2018-12-31');
 
-        $this->assertTrue($firstJan->isSame($lastDec, DatePeriod::YEAR));
+        $this->assertTrue($firstJan->isSame($lastDec, DatePeriods::YEAR));
     }
 
     public function testIsBefore()
@@ -81,11 +81,11 @@ class DateTest extends TestCase
     {
         $date = new Date('2018-01-01');
 
-        $date->add(1, DatePeriod::DAY);
+        $date->add(1, DatePeriods::DAY);
 
         $this->assertEquals('2018-01-02', $date->format('Y-m-d'));
 
-        $date->add(1, DatePeriod::YEAR);
+        $date->add(1, DatePeriods::YEAR);
 
         $this->assertEquals('2019-01-02', $date->format('Y-m-d'));
     }
@@ -94,11 +94,11 @@ class DateTest extends TestCase
     {
         $date = new Date('2019-01-01');
 
-        $date->subtract(1, DatePeriod::DAY);
+        $date->subtract(1, DatePeriods::DAY);
 
         $this->assertEquals('2018-12-31', $date->format('Y-m-d'));
 
-        $date->subtract(1, DatePeriod::YEAR);
+        $date->subtract(1, DatePeriods::YEAR);
 
         $this->assertEquals('2017-12-31', $date->format('Y-m-d'));
     }

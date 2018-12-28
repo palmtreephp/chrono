@@ -2,7 +2,7 @@
 
 namespace Palmtree\Chrono;
 
-use Palmtree\Chrono\Option\DatePeriod;
+use Palmtree\Chrono\Option\DatePeriods;
 
 /**
  * @method self add(int $value, string $period)
@@ -26,11 +26,11 @@ class Date extends DateTime
             self::$today = new self('now', $this->dateTime->getTimezone());
         }
 
-        return $this->isSame(self::$today, DatePeriod::DAY);
+        return $this->isSame(self::$today, DatePeriods::DAY);
     }
 
     protected function getFormatFromTimePrecision(?string $precision): string
     {
-        return DatePeriod::getDateFormat($precision ?? DatePeriod::DAY);
+        return DatePeriods::getDateFormat($precision ?? DatePeriods::DAY);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Palmtree\Chrono\Option;
 
-abstract class TimePeriod extends AbstractPeriod
+abstract class TimePeriods extends AbstractPeriods
 {
     public const HOUR   = 'hour';
     public const MINUTE = 'minute';
