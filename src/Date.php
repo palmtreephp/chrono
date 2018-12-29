@@ -10,9 +10,6 @@ use Palmtree\Chrono\Option\DatePeriods;
  */
 class Date extends DateTime
 {
-    /** @var Date */
-    private static $today;
-
     public function __construct(string $time = 'now', $timezone = null)
     {
         parent::__construct($time, $timezone);
@@ -22,11 +19,9 @@ class Date extends DateTime
 
     public function isToday(): bool
     {
-        if (self::$today === null) {
-            self::$today = new self('now', $this->dateTime->getTimezone());
-        }
+        $today = new self('now', $this->dateTime->getTimezone());
 
-        return $this->isSame(self::$today, DatePeriods::DAY);
+        return $this->isSame($today, DatePeriods::DAY);
     }
 
     public function setYear(int $year): self
