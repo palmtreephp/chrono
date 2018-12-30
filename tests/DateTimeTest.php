@@ -10,18 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class DateTimeTest extends TestCase
 {
-    public function testToDateTime()
-    {
-        $date = new Date('2019-01-01');
-
-        $dateTime = $date->toNative();
-
-        $internalDateTime = $this->getPropertyValue($date, 'dateTime');
-
-        $this->assertNotSame($dateTime, $internalDateTime);
-        $this->assertEquals($internalDateTime->format(\DateTime::ATOM), $dateTime->format(\DateTime::ATOM));
-    }
-
     public function testIsSame()
     {
         $dateTime   = new DateTime('2018-01-01 12:00:00');
@@ -49,15 +37,5 @@ class DateTimeTest extends TestCase
         $dateTime->subtract(1, DatePeriods::DAY)->subtract(1, TimePeriods::HOUR);
 
         $this->assertEquals('2018-01-01 12:00:00', $dateTime->format('Y-m-d H:i:s'));
-    }
-
-    private function getPropertyValue($object, string $property)
-    {
-        $reflectionObject = new \ReflectionObject($object);
-
-        $property = $reflectionObject->getProperty($property);
-        $property->setAccessible(true);
-
-        return $property->getValue($object);
     }
 }

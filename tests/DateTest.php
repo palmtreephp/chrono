@@ -3,6 +3,7 @@
 namespace Palmtree\Chrono\Tests;
 
 use Palmtree\Chrono\Date;
+use Palmtree\Chrono\DateTime;
 use Palmtree\Chrono\Option\DatePeriods;
 use PHPUnit\Framework\TestCase;
 
@@ -127,11 +128,44 @@ class DateTest extends TestCase
         $this->assertSame($secondJan, $max);
     }
 
+    public function testToNative()
+    {
+        $date = new Date('2019-01-01');
+
+        $dateTime = $date->toNative();
+
+        $internalDateTime = $this->getPropertyValue($date, 'dateTime');
+
+        $this->assertNotSame($dateTime, $internalDateTime);
+        $this->assertEquals($internalDateTime->format(\DateTime::ATOM), $dateTime->format(\DateTime::ATOM));
+    }
+
+    public function testFromNative()
+    {
+        $native = new \DateTime('2019-01-01 12:30:45.123456');
+
+        $dateTime = DateTime::fromNative($native);
+
+        $this->assertNotSame($native, $dateTime->toNative());
+        $this->assertEquals($dateTime->toNative()->getTimestamp(), $native->getTimestamp());
+        $this->assertEquals('2019-01-01 12:30:45.123456', $dateTime->format('Y-m-d H:i:s.u'));
+    }
+
     /** @expectedException \InvalidArgumentException */
     public function testInvalidPrecision()
     {
         $date = new Date('2019-01-01');
 
         $date->isSame(new Date(), 'foo');
+    }
+
+    private function getPropertyValue($object, string $property)
+    {
+        $reflectionObject = new \ReflectionObject($object);
+
+        $property = $reflectionObject->getProperty($property);
+        $property->setAccessible(true);
+
+        return $property->getValue($object);
     }
 }
