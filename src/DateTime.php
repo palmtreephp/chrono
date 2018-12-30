@@ -2,93 +2,41 @@
 
 namespace Palmtree\Chrono;
 
-use Palmtree\Chrono\Option\ComparisonOperators;
 use Palmtree\Chrono\Option\DatePeriods;
 use Palmtree\Chrono\Option\TimePeriods;
 
-class DateTime
+class DateTime extends Date
 {
-    /** @var \DateTime */
-    protected $dateTime;
-
     public function __construct(string $time = 'now', $timezone = null)
     {
-        if (\is_string($timezone)) {
-            $timezone = new \DateTimeZone($timezone);
-        }
-
-        $this->dateTime = new \DateTime($time, $timezone);
+        $this->dateTime = $this->createInternalDateTime($time, $timezone);
     }
 
-    public function format(string $format): string
+    public function setTime(int $hour, int $minute, int $second = 0, int $microseconds = 0): self
     {
-        return $this->dateTime->format($format);
-    }
-
-    public function isSame(self $date, ?string $precision = null): bool
-    {
-        return $this->compareTo($date, ComparisonOperators::EQUAL_TO, $precision);
-    }
-
-    public function isBefore(self $date, ?string $precision = null): bool
-    {
-        return $this->compareTo($date, ComparisonOperators::LESS_THAN, $precision);
-    }
-
-    public function isSameOrBefore(self $date, ?string $precision = null): bool
-    {
-        return $this->compareTo($date, ComparisonOperators::LESS_THAN_OR_EQUAL_TO, $precision);
-    }
-
-    public function isAfter(self $date, ?string $precision = null): bool
-    {
-        return $this->compareTo($date, ComparisonOperators::GREATER_THAN, $precision);
-    }
-
-    public function isSameOrAfter(self $date, ?string $precision = null): bool
-    {
-        return $this->compareTo($date, ComparisonOperators::GREATER_THAN_OR_EQUAL_TO, $precision);
-    }
-
-    public function add(int $value, string $period): self
-    {
-        $this->dateTime->add($this->getDateInterval($value, $period));
+        $this->dateTime->setTime($hour, $minute, $second, $microseconds);
 
         return $this;
     }
 
-    public function subtract(int $value, string $period): self
+    public function setHour(int $hour): self
     {
-        $this->dateTime->sub($this->getDateInterval($value, $period));
-
-        return $this;
+        return $this->setTime($hour, $this->dateTime->format('i'), $this->dateTime->format('s'), $this->dateTime->format('u'));
     }
 
-    public function toDateTime(): \DateTime
+    public function setMinute(int $minute): self
     {
-        return clone $this->dateTime;
+        return $this->setTime($this->dateTime->format('H'), $minute, $this->dateTime->format('s'), $this->dateTime->format('u'));
     }
 
-    public static function min(...$dates): ?self
+    public function setSecond(int $second): self
     {
-        return \array_reduce($dates, function (?self $carry, self $dateTime) {
-            if (!$carry || $dateTime->isBefore($carry)) {
-                $carry = $dateTime;
-            }
-
-            return $carry;
-        });
+        return $this->setTime($this->dateTime->format('H'), $this->dateTime->format('i'), $second, $this->dateTime->format('u'));
     }
 
-    public static function max(...$dates): ?self
+    public function setMicroseconds(int $microseconds): self
     {
-        return \array_reduce($dates, function (?self $carry, self $dateTime) {
-            if (!$carry || $dateTime->isAfter($carry)) {
-                $carry = $dateTime;
-            }
-
-            return $carry;
-        });
+        return $this->setTime($this->dateTime->format('H'), $this->dateTime->format('i'), $this->dateTime->format('s'), $microseconds);
     }
 
     protected function getFormatFromTimePrecision(?string $precision): string
@@ -100,25 +48,5 @@ class DateTime
         }
 
         return $format;
-    }
-
-    protected function getDateInterval(int $value, string $period): \DateInterval
-    {
-        try {
-            $intervalCode = TimePeriods::getIntervalCode($period);
-            $prefix       = 'PT';
-        } catch (\InvalidArgumentException $e) {
-            $intervalCode = DatePeriods::getIntervalCode($period);
-            $prefix       = 'P';
-        }
-
-        return new \DateInterval("$prefix$value$intervalCode");
-    }
-
-    private function compareTo(self $date, string $operator, ?string $precision = null): bool
-    {
-        $format = $this->getFormatFromTimePrecision($precision);
-
-        return \version_compare((int)$this->format($format), (int)$date->format($format), $operator);
     }
 }

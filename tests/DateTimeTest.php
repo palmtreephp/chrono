@@ -14,7 +14,7 @@ class DateTimeTest extends TestCase
     {
         $date = new Date('2019-01-01');
 
-        $dateTime = $date->toDateTime();
+        $dateTime = $date->toNative();
 
         $internalDateTime = $this->getPropertyValue($date, 'dateTime');
 
