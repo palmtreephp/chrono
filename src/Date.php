@@ -28,9 +28,9 @@ class Date
         return clone $this->dateTime;
     }
 
-    public function format(string $format): string
+    public function format(?string $format = null): string
     {
-        return $this->dateTime->format($format);
+        return $this->dateTime->format($format ?? \DateTime::ISO8601);
     }
 
     public function isSame(self $date, ?string $precision = null): bool
