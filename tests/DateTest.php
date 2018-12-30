@@ -5,6 +5,7 @@ namespace Palmtree\Chrono\Tests;
 use Palmtree\Chrono\Date;
 use Palmtree\Chrono\DateTime;
 use Palmtree\Chrono\Option\DatePeriods;
+use Palmtree\Chrono\Option\TimePeriods;
 use PHPUnit\Framework\TestCase;
 
 class DateTest extends TestCase
@@ -156,7 +157,7 @@ class DateTest extends TestCase
     {
         $date = new Date('2019-01-01');
 
-        $date->isSame(new Date(), 'foo');
+        $date->isSame(new Date(), TimePeriods::SECOND);
     }
 
     private function getPropertyValue($object, string $property)

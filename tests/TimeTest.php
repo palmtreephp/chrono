@@ -77,4 +77,12 @@ class TimeTest extends TestCase
 
         $this->assertSame($one, $max);
     }
+
+    /** @expectedException \InvalidArgumentException */
+    public function testInvalidPrecision()
+    {
+        $time = new Time('12:30');
+
+        $time->isSame(new Time(), DatePeriods::MONTH);
+    }
 }
