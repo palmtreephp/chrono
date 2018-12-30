@@ -5,6 +5,17 @@ namespace Palmtree\Chrono;
 use Palmtree\Chrono\Option\DatePeriods;
 use Palmtree\Chrono\Option\TimePeriods;
 
+/**
+ * @method self   add(int $value, string $period)
+ * @method self   subtract(int $value, string $period)
+ * @method self   setDate(int $year, int $month, int $day)
+ * @method self   setDay(int $day)
+ * @method self   setMonth(int $month)
+ * @method self   setYear(int $year)
+ * @method self   fromNative(\DateTime $dateTime)
+ * @method static null|self min(...$dates)
+ * @method static null|self max(...$dates)
+ */
 class DateTime extends Date
 {
     public function __construct(string $time = 'now', $timezone = null)
