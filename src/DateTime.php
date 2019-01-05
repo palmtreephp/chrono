@@ -12,7 +12,7 @@ use Palmtree\Chrono\Option\TimePeriods;
  * @method self   setDay(int $day)
  * @method self   setMonth(int $month)
  * @method self   setYear(int $year)
- * @method self   fromNative(\DateTime $dateTime)
+ * @method static self   fromNative(\DateTime $dateTime)
  * @method static null|self min(...$dates)
  * @method static null|self max(...$dates)
  */

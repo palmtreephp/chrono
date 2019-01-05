@@ -33,6 +33,13 @@ class Date
         return $this->dateTime->format($format ?? \DateTime::ISO8601);
     }
 
+    public function isToday(): bool
+    {
+        $today = new self('now', $this->dateTime->getTimezone());
+
+        return $this->isSame($today, DatePeriods::DAY);
+    }
+
     public function isSame(self $date, ?string $precision = null): bool
     {
         return $this->compareTo($date, ComparisonOperators::EQUAL_TO, $precision);
@@ -58,25 +65,30 @@ class Date
         return $this->compareTo($date, ComparisonOperators::GREATER_THAN_OR_EQUAL_TO, $precision);
     }
 
-    public function add(int $value, string $period): self
+    /**
+     * @param int    $value
+     * @param string $period
+     *
+     * @return self
+     */
+    public function add(int $value, string $period)
     {
         $this->dateTime->add($this->getDateInterval($value, $period));
 
         return $this;
     }
 
-    public function subtract(int $value, string $period): self
+    /**
+     * @param int    $value
+     * @param string $period
+     *
+     * @return self
+     */
+    public function subtract(int $value, string $period)
     {
         $this->dateTime->sub($this->getDateInterval($value, $period));
 
         return $this;
-    }
-
-    public function isToday(): bool
-    {
-        $today = new self('now', $this->dateTime->getTimezone());
-
-        return $this->isSame($today, DatePeriods::DAY);
     }
 
     public function setYear(int $year): self
@@ -94,11 +106,28 @@ class Date
         return $this->setDate($this->dateTime->format('Y'), $this->dateTime->format('m'), $day);
     }
 
-    public function setDate(int $year, int $month, int $day): self
+    /**
+     * @param int $year
+     * @param int $month
+     * @param int $day
+     *
+     * @return self
+     */
+    public function setDate(int $year, int $month, int $day)
     {
         $this->dateTime->setDate($year, $month, $day);
 
         return $this;
+    }
+
+    public function createClone()
+    {
+        return clone $this;
+    }
+
+    public function __clone()
+    {
+        $this->dateTime = clone $this->dateTime;
     }
 
     public static function min(...$dates): ?self
